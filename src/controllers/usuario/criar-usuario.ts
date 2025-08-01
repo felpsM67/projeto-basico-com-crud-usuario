@@ -54,6 +54,7 @@ class CriarUsuarioController {
         nome,
         email,
         senha: senhaCriptografada,
+        role
       });
 
       return {
