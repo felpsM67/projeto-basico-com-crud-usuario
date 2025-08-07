@@ -1,7 +1,6 @@
 // Bibliotecas
 import sequelize from "./database";
 import { ENV } from "./config/env";
-import { Express } from "express";
 import { initializeDatabaseAndServer } from "./config/initializeDatabaseAndServer";
 
 // Função para iniciar o servidor em uma porta específica

@@ -1,6 +1,6 @@
-import adaptRoute from "../adapters/express-route-adapter";
+import adaptRoute from "../../adapters/express-route-adapter";
 import { Router } from "express";
-import CriarUsuarioController from "../controllers/usuario/criar-usuario";
+import CriarUsuarioController from "../../controllers/usuario/criar-usuario";
 
 export default (router: Router): void => {
   /**
