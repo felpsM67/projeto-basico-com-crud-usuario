@@ -16,6 +16,7 @@ export const initializeDatabaseAndServer = async (sequelize: Sequelize) => {
         console.error("Erro ao sincronizar o banco de dados:", err);
       });
     const modelsPath = path.resolve(__dirname, "../models");
+    console.log("Caminho dos modelos:", modelsPath);
     const modelFiles = fs
       .readdirSync(modelsPath)
       .filter((file) => file.endsWith("-model.ts"));
