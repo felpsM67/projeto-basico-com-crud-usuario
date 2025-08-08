@@ -1,4 +1,4 @@
-import { Role } from '../../enums/role';
+import { Role } from '../../enum/role';
 import { HttpRequest, HttpResponse } from '../../interfaces';
 import User from '../../models/user-model';
 import bcrypt from 'bcrypt';
