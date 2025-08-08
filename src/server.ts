@@ -1,10 +1,6 @@
 // Bibliotecas
 import sequelize from "./database";
 import { ENV } from "./config/env";
-import { Express } from "express";
-import { Sequelize } from "sequelize";
-import fs from "fs";
-import path from "path";
 import { initializeDatabaseAndServer } from "./config/initializeDatabaseAndServer";
 
 // Função para iniciar o servidor em uma porta específica
@@ -27,16 +23,16 @@ const startServer = async (port: number) => {
     });
 };
 
+
+initializeDatabaseAndServer(sequelize);
 // Iniciar o servidor na porta inicial
 // Sincronizar o banco de dados e iniciar o servidor
 sequelize
-  .authenticate()
+  .sync()
   .then(() => {
-    console.log("Conexão com o banco de dados estabelecida com sucesso.");
+    console.log("Banco de dados sincronizado");
     startServer(Number(ENV.PORT));
   })
   .catch((err: any) => {
     console.error("Erro ao sincronizar o banco de dados:", err);
   });
-
-initializeDatabaseAndServer(startServer)
