@@ -28,11 +28,11 @@ initializeDatabaseAndServer(sequelize);
 // Iniciar o servidor na porta inicial
 // Sincronizar o banco de dados e iniciar o servidor
 sequelize
-  .sync()
+  .authenticate()
   .then(() => {
-    console.log("Banco de dados sincronizado");
+    console.log("Banco de dados conectado com sucesso.");
     startServer(Number(ENV.PORT));
   })
   .catch((err: any) => {
-    console.error("Erro ao sincronizar o banco de dados:", err);
+    console.error("Erro ao conectar o banco de dados:", err);
   });
