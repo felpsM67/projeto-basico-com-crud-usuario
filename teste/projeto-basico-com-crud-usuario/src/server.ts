@@ -1,7 +1,7 @@
 // Bibliotecas
 import sequelize from "./database";
 import { ENV } from "./config/env";
-import { initializeDatabaseAndServer } from "./config/initializeDatabaseAndServer";
+import { Express } from "express";
 
 // Função para iniciar o servidor em uma porta específica
 const startServer = async (port: number) => {
@@ -23,8 +23,6 @@ const startServer = async (port: number) => {
     });
 };
 
-
-initializeDatabaseAndServer(sequelize);
 // Iniciar o servidor na porta inicial
 // Sincronizar o banco de dados e iniciar o servidor
 sequelize
