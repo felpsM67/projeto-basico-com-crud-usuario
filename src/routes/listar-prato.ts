@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { CriarPratoController } from "../controllers/prato/criar-prato";
 import adaptRoute from "../adapters/express-route-adapter";
+import ListarPratoController from "../controllers/prato/listar-prato";
 
 export default (router: Router): void => {
-  router.post("/pratos", adaptRoute(new CriarPratoController()));
+  router.get("/pratos", adaptRoute(new ListarPratoController()));
 };
