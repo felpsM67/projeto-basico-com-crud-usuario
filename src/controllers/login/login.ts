@@ -3,28 +3,44 @@ import bcrypt from 'bcrypt';
 import { Controller, HttpRequest, HttpResponse } from '../../interfaces';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { ENV } from '../../config/env';
+import Cliente from '../../models/cliente-model';
+import { LoginService } from '../../service/login-service';
 
 export class LoginController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { email, senha } = httpRequest.body;
 
-      // Verificar se o usuário existe no banco de dados
-      const user = await User.findOne({ where: { email } });
-      if (!user) {
-        return {
-          statusCode: 404,
-          body: { message: 'Usuário não encontrado' },
-        };
-      }
+      const loginService = new LoginService();
 
-      // Comparar a senha recebida com a senha criptografada
-      const senhaEhValida = await bcrypt.compare(senha, user.senha);
-      if (!senhaEhValida) {
+      const response = await loginService.login({ email, senha });
+
+      if (!response) {
         return {
           statusCode: 401,
           body: { message: 'Credenciais inválidas' },
         };
+      }
+
+      const perfil = await loginService.buscarPerfilPorUserId(response);
+      if (!perfil) {
+        return {
+          statusCode: 404,
+          body: { message: 'Perfil não encontrado' },
+        };
+      }
+      const user = perfil.user;
+
+      console.log(perfil);
+
+      if(user.role === 'Cliente') {
+        const cliente = await Cliente.findOne({ where: { userId: user.id } });
+        if (!cliente) {
+          return {
+            statusCode: 404,
+            body: { message: 'Usuário não encontrado, verificar cadastro.' },
+          };
+        }
       }
 
       // Configurações para o access token

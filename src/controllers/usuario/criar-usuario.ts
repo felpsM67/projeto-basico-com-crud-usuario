@@ -1,5 +1,6 @@
 import { Role } from '../../enum/role';
 import { HttpRequest, HttpResponse } from '../../interfaces';
+import Cliente from '../../models/cliente-model';
 import User from '../../models/user-model';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
@@ -55,6 +56,11 @@ class CriarUsuarioController {
         email,
         senha: senhaCriptografada,
         role
+      });
+
+      const cliente = await Cliente.create({
+        nome,
+        userId: usuario.id
       });
 
       return {
