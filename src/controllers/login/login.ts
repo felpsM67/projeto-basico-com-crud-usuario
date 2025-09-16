@@ -3,53 +3,45 @@ import bcrypt from 'bcrypt';
 import { Controller, HttpRequest, HttpResponse } from '../../interfaces';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { ENV } from '../../config/env';
+import Cliente from '../../models/cliente-model';
+import { LoginService } from '../../service/login-service';
 
 export class LoginController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { email, senha } = httpRequest.body;
 
-      // Verificar se o usuário existe no banco de dados
-      const user = await User.findOne({ where: { email } });
-      if (!user) {
-        return {
-          statusCode: 404,
-          body: { message: 'Usuário não encontrado' },
-        };
-      }
+      const loginService = new LoginService();
 
-      // Comparar a senha recebida com a senha criptografada
-      const senhaEhValida = await bcrypt.compare(senha, user.senha);
-      if (!senhaEhValida) {
+      const response = await loginService.login({ email, senha });
+
+      if (!response) {
         return {
           statusCode: 401,
           body: { message: 'Credenciais inválidas' },
         };
       }
 
-      // Configurações para o access token
-      const accessTokenOptions: SignOptions = {
-        expiresIn: (ENV.JWT_EXPIRES_IN as SignOptions['expiresIn']) || '15m',
-      };
+      const perfil = await loginService.buscarPerfilPorUserId(response);
+      if (!perfil) {
+        return {
+          statusCode: 404,
+          body: { message: 'Perfil não encontrado' },
+        };
+      }
+      const user = perfil.user;
 
-      // Configurações para o refresh token
-      const refreshTokenOptions: SignOptions = {
-        expiresIn: (ENV.JWT_REFRESH_EXPIRES_IN as SignOptions['expiresIn']) || '7d',
-      };
+      if(user.role === 'Cliente') {
+        const cliente = await Cliente.findOne({ where: { userId: user.id } });
+        if (!cliente) {
+          return {
+            statusCode: 404,
+            body: { message: 'Usuário não encontrado, verificar cadastro.' },
+          };
+        }
+      }
 
-      // Gerar o access token
-      const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.role },
-        ENV.JWT_SECRET || 'default_secret',
-        accessTokenOptions
-      );
-
-      // Gerar o refresh token
-      const refreshToken = jwt.sign(
-        { id: user.id },
-        ENV.JWT_REFRESH_SECRET || 'default_refresh_secret',
-        refreshTokenOptions
-      );
+      const { token, refreshToken } = loginService.gerarTokens(user);
 
       // Retornar sucesso (você pode adicionar lógica para gerar tokens aqui)
       return {
