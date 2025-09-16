@@ -31,8 +31,6 @@ export class LoginController implements Controller {
       }
       const user = perfil.user;
 
-      console.log(perfil);
-
       if(user.role === 'Cliente') {
         const cliente = await Cliente.findOne({ where: { userId: user.id } });
         if (!cliente) {
@@ -43,29 +41,7 @@ export class LoginController implements Controller {
         }
       }
 
-      // Configurações para o access token
-      const accessTokenOptions: SignOptions = {
-        expiresIn: (ENV.JWT_EXPIRES_IN as SignOptions['expiresIn']) || '15m',
-      };
-
-      // Configurações para o refresh token
-      const refreshTokenOptions: SignOptions = {
-        expiresIn: (ENV.JWT_REFRESH_EXPIRES_IN as SignOptions['expiresIn']) || '7d',
-      };
-
-      // Gerar o access token
-      const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.role },
-        ENV.JWT_SECRET || 'default_secret',
-        accessTokenOptions
-      );
-
-      // Gerar o refresh token
-      const refreshToken = jwt.sign(
-        { id: user.id },
-        ENV.JWT_REFRESH_SECRET || 'default_refresh_secret',
-        refreshTokenOptions
-      );
+      const { token, refreshToken } = loginService.gerarTokens(user);
 
       // Retornar sucesso (você pode adicionar lógica para gerar tokens aqui)
       return {

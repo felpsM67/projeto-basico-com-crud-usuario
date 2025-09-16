@@ -4,6 +4,8 @@ import Cliente from '../../models/cliente-model';
 import User from '../../models/user-model';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import Funcionario from '../../models/funcionario-model';
+import Gerente from '../../models/gerente-model';
 class CriarUsuarioController {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -58,10 +60,7 @@ class CriarUsuarioController {
         role
       });
 
-      const cliente = await Cliente.create({
-        nome,
-        userId: usuario.id
-      });
+      await this.criarPerfil(usuario.id, role, nome);
 
       return {
         statusCode: 201,
@@ -72,6 +71,26 @@ class CriarUsuarioController {
         statusCode: 500,
         body: { error: error.message },
       };
+    }
+  }
+
+  async criarPerfil(userId: number, role: string, nome: string) {
+    if(role === Role.CLIENTE) {
+      await Cliente.create({
+        nome,
+        userId
+      });
+    } else if(role === Role.FUNCIONARIO) {
+      await Funcionario.create({
+        nome,
+        userId
+      });
+    }
+    else if(role === Role.GERENTE) {
+      await Gerente.create({
+        nome,
+        userId
+      });
     }
   }
 }
