@@ -252,6 +252,96 @@ paths:
           description: Token inválido ou expirado
         500:
           description: Algum erro aconteceu
+  /pedidos:
+    get:
+      summary: Lista todos os pedidos
+      security: [ { bearerAuth: [] } ]
+      tags: [Pedidos]
+      responses:
+        '200':
+          description: Lista de pedidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedido'
+        '401': { description: Token inválido ou ausente }
+        '403': { description: Sem permissão }
+    post:
+      summary: Cria um pedido
+      security: [ { bearerAuth: [] } ]
+      tags: [Pedidos]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreatePedido' }
+            example:
+              usuarioId: "u-123"
+              itens:
+                - produtoId: "p-1"
+                  quantidade: 2
+                  precoUnitario: 10
+      responses:
+        '201': { description: Criado }
+        '400': { description: Erro de validação }
+        '401': { description: Token inválido ou ausente }
+        '403': { description: Sem permissão }
+  /pedidos/{id}:
+    get:
+      summary: Busca pedido por ID
+      security: [ { bearerAuth: [] } ]
+      tags: [Pedidos]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+          example: "ped-001"
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Pedido' } } } }
+        '401': { description: Token inválido ou ausente }
+        '403': { description: Sem permissão }
+        '404': { description: Não encontrado }
+    put:
+      summary: Atualiza pedido
+      security: [ { bearerAuth: [] } ]
+      tags: [Pedidos]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+          example: "ped-001"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdatePedido' }
+            example:
+              status: "PAGO"
+      responses:
+        '200': { description: OK }
+        '400': { description: Erro de validação }
+        '401': { description: Token inválido ou ausente }
+        '403': { description: Sem permissão }
+        '404': { description: Não encontrado }
+    delete:
+      summary: Remove pedido
+      security: [ { bearerAuth: [] } ]
+      tags: [Pedidos]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+          example: "ped-001"
+      responses:
+        '204': { description: Sem conteúdo }
+        '401': { description: Token inválido ou ausente }
+        '403': { description: Sem permissão }
+        '404': { description: Não encontrado }
 
 
 components:
@@ -328,4 +418,37 @@ components:
       type: string
       description: Token JWT para autenticação
       example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-
+  PedidoItem:
+    type: object
+    properties:
+      produtoId: { type: string, example: "p-123" }
+      quantidade: { type: integer, minimum: 1, example: 2 }
+      precoUnitario: { type: number, minimum: 0, example: 10.5 }
+    required: [produtoId, quantidade, precoUnitario]
+  Pedido:
+    type: object
+    properties:
+      id: { type: string, example: "ped-001" }
+      usuarioId: { type: string, example: "u-123" }
+      itens:
+        type: array
+        items: { $ref: '#/components/schemas/PedidoItem' }
+      total: { type: number, example: 21.0 }
+      status: { type: string, enum: [CRIADO, PAGO, CANCELADO, ENVIADO], example: CRIADO }
+      createdAt: { type: string, format: date-time, example: "2025-09-15T10:00:00Z" }
+      updatedAt: { type: string, format: date-time, example: "2025-09-15T10:00:00Z" }
+  CreatePedido:
+    type: object
+    properties:
+      usuarioId: { type: string, example: "u-123" }
+      itens:
+        type: array
+        items: { $ref: '#/components/schemas/PedidoItem' }
+    required: [usuarioId, itens]
+  UpdatePedido:
+    type: object
+    properties:
+      itens:
+        type: array
+        items: { $ref: '#/components/schemas/PedidoItem' }
+        status: { type: string, enum: [CRIADO, PAGO, CANCELADO, ENVIADO], example: PAGO }

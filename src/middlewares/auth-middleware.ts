@@ -1,19 +1,22 @@
-import { Request, Response, NextFunction } from 'express';
-
-
-
-const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-
-  if (!req.headers.authorization) {
-
-    res.status(401).json({ error: 'Unauthorized' });
-
-    return;
-
+import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+export default async function authMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const authHeader = req.headers.authorization || "";
+    const [, token] = authHeader.split(" ");
+    if (!token) return res.status(401).json({ message: "Token ausente" });
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+    (req as any).user = {
+      id: decoded.sub,
+      email: decoded.email,
+      role: decoded.role,
+    };
+    return next();
+  } catch (err) {
+    return res.status(401).json({ message: "Token inválido" });
   }
-
-  next();
-
-};
-
-export default authMiddleware;
+}
