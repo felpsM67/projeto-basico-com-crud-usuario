@@ -1,4 +1,4 @@
-import { Role } from '../../enum/role';
+import { Role } from '../../enums/role';
 import { HttpRequest, HttpResponse } from '../../interfaces';
 import Cliente from '../../models/cliente-model';
 import User from '../../models/user-model';
