@@ -311,11 +311,11 @@ paths:
           example: 1
       responses:
         200:
-          description: OK 
-            content: 
-              application/json: 
-                schema: 
-                  $ref: '#/components/schemas/Pedido'
+          description: Buscar pedido por ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
         401:
           description: Token inválido ou ausente
         403:
@@ -344,11 +344,11 @@ paths:
               status: "PAGO"
       responses:
         200:
-          description: OK 
-            content: 
-              application/json: 
-                schema: 
-                  $ref: '#/components/schemas/Pedido'
+          description: Pedido atualizado
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/Pedido'
         400:
           description: Erro de validação
         401:
