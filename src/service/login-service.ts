@@ -27,11 +27,11 @@ export class LoginService {
       return null;
     }
     if (user.role === 'Funcionario') {
-      return Funcionario.findOne({ where: { userId } ,include: [User] });
+      return Funcionario.findOne({ where: { userId } ,include: [{model: User, as: 'user'}] });
     } else if (user.role === 'Cliente') {
-      return Cliente.findOne({ where: { userId } ,include: [User] });
+      return Cliente.findOne({ where: { userId } ,include: [{model: User, as: 'user'}] });
     } else if (user.role === 'Gerente') {
-      return Gerente.findOne({ where: { userId } ,include: [User] });
+      return Gerente.findOne({ where: { userId } ,include: [{model: User, as: 'user'}] });
     }
     return null;
   }
