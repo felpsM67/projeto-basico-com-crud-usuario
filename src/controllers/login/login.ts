@@ -26,20 +26,10 @@ export class LoginController implements Controller {
       if (!perfil) {
         return {
           statusCode: 404,
-          body: { message: 'Perfil não encontrado' },
+          body: { message: 'Usuário não encontrado, verificar cadastro.' },
         };
       }
       const user = perfil.user;
-
-      if(user.role === 'Cliente') {
-        const cliente = await Cliente.findOne({ where: { userId: user.id } });
-        if (!cliente) {
-          return {
-            statusCode: 404,
-            body: { message: 'Usuário não encontrado, verificar cadastro.' },
-          };
-        }
-      }
 
       const { token, refreshToken } = loginService.gerarTokens(user);
 
