@@ -4,7 +4,7 @@ import fs from "fs";
 import { Sequelize } from "sequelize";
 
 export const initializeDatabaseAndServer = async (sequelize: Sequelize) => {
-  if (!ENV.UPDATE_MODEL) return;
+  if (!!ENV.UPDATE_MODEL) return;
 
   try {
     const modelsPath = path.resolve(__dirname, "../models");
