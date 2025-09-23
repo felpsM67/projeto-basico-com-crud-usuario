@@ -1,6 +1,6 @@
-import { Controller, HttpRequest, HttpResponse, UpdatePedidoDTO } from "../../interfaces";
 import { PedidoService } from "../../service/pedido-service";
 import { CreatePedidoDTO } from "../../interfaces";
+import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export class CriarPedidoController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {

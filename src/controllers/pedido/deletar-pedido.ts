@@ -1,4 +1,4 @@
-import { Controller, HttpRequest, HttpResponse, UpdatePedidoDTO } from "../../interfaces";
+import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 import { PedidoService } from "../../service/pedido-service";
 
 export class DeletarPedidoController implements Controller {

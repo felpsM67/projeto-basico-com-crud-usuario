@@ -1,7 +1,7 @@
-import { Controller, HttpRequest, HttpResponse } from "../../interfaces";
 
 import User from '../../models/user-model';
 import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
 class RefreshTokenController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {

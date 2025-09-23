@@ -1,5 +1,5 @@
-import { Controller, HttpRequest, HttpResponse } from "../../interfaces";
 import Prato from "../../models/prato-model";
+import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export default class DeletarPratoController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
