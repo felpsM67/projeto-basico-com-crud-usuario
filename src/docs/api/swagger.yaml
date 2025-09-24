@@ -14,6 +14,8 @@ tags:
     description: Operações relacionadas a pratos
   - name: Auth
     description: Operações de autenticação
+  - name: Pedidos
+    description: Operações relacionadas a pedidos
 
 paths:
   /api/users:
@@ -234,13 +236,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                refreshToken:
-                  type: string
-                  description: Token JWT atual
-              example:
-                refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              $ref: '#/components/schemas/RefreshToken'
       responses:
         200:
           description: Novo token gerado com sucesso
@@ -417,24 +413,30 @@ components:
       type: object
       required:
         - nome
-        - descricao
-        - preco
+        - descricao_detalhada
+        - descricao_resumida
+        - cozinha
+        - valor
       properties:
         nome:
           type: string
           description: O nome do prato
-        descricao:
+        descricao_detalhada:
           type: string
-          description: A descrição do prato
-        preco:
+          description: A descrição detalhada do prato
+        descricao_resumida:
+          type: string
+          description: A descrição resumida do prato
+        valor:
           type: number
           format: float
-          description: O preço do prato
+          description: O valor do prato
       example:
-        id: 1
         nome: "Lasanha"
-        descricao: "Lasanha à bolonhesa com queijo gratinado"
-        preco: 29.90
+        descricao_detalhada: "Lasanha à bolonhesa com queijo gratinado"
+        descricao_resumida: "Lasanha tradicional"
+        cozinha: "Italiana"
+        valor: 29.90
     Login:
       type: object
       required:
@@ -451,9 +453,13 @@ components:
         email: "joao.silva@dominio.com"
         senha: "123abc"
     RefreshToken:
-      type: string
+      type: object
+      properties:
+        refreshToken:
+          type: string
       description: Token JWT para autenticação
-      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      example: 
+        refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2FvLnNpbHZhQGRvbWluaW8uY29tIiwicm9sZSI6IkdlcmVudGUiLCJpYXQiOjE3NTg2NzUyNTcsImV4cCI6MTc1ODY3NjE1N30.9wHmaympHnxyNtZxfEyEtrxXSRlUWpNlwDSqlDfKoMQ"
     PedidoItem:
       type: object
       properties:

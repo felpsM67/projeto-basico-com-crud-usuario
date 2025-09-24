@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { Controller, HttpRequest } from "../interfaces/index";
+import { Controller, HttpRequest } from "../protocols";
 const adaptRoute = (controller: Controller) => {
   return async function (req: Request, res: Response) {
     const httpRequest: HttpRequest = {
       body: req.body,
       params: req.params,
-      pathParameters: req.params,
-      queryStringParameters: req.query,
+      pathParams: req.params,
+      query: req.query,
     };
     try {
       const httpResponse = await controller.handle(httpRequest);

@@ -1,12 +1,12 @@
 import { Role } from '../../enums/role';
-import { HttpRequest, HttpResponse } from '../../interfaces';
 import Cliente from '../../models/cliente-model';
 import User from '../../models/user-model';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 import Funcionario from '../../models/funcionario-model';
 import Gerente from '../../models/gerente-model';
-class CriarUsuarioController {
+import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+class CriarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { nome, email, senha, role } = httpRequest.body;

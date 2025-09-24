@@ -1,9 +1,4 @@
-import User from '../../models/user-model';
-import bcrypt from 'bcrypt';
-import { Controller, HttpRequest, HttpResponse } from '../../interfaces';
-import jwt, { SignOptions } from 'jsonwebtoken';
-import { ENV } from '../../config/env';
-import Cliente from '../../models/cliente-model';
+import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 import { LoginService } from '../../service/login-service';
 
 export class LoginController implements Controller {

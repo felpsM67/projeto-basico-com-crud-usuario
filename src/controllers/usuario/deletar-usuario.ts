@@ -1,5 +1,5 @@
-import { Controller, HttpRequest, HttpResponse } from '../../interfaces';
 import  User from '../../models/user-model';
+import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 class DeletarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const { id } = httpRequest.params;
