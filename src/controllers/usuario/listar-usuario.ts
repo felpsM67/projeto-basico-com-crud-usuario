@@ -1,11 +1,13 @@
 import User from '../../models/user-model';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+import { UsuarioService } from '../../service/usuario-service';
 
 class ListarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const userId = httpRequest.params.id;
-      const usuario = await User.findByPk(userId);
+      const usuarioService = new UsuarioService()
+      const usuario = await usuarioService.buscarUsuarioPorId(userId);
       if (!usuario && userId !== '{id}' && userId !== undefined) {
         return {
           statusCode: 404,
@@ -17,7 +19,7 @@ class ListarUsuarioController implements Controller {
           body: usuario,
         };
       }
-      const usuarios = await User.findAll();
+      const usuarios = await usuarioService.buscaTodosUsuarios();
       if (usuarios.length === 0) {
         return {
           statusCode: 404,

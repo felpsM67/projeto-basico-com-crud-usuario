@@ -1,28 +1,29 @@
-import { Role } from '../../enums/role';
-import Cliente from '../../models/cliente-model';
-import User from '../../models/user-model';
-import bcrypt from 'bcrypt';
-import validator from 'validator';
-import Funcionario from '../../models/funcionario-model';
-import Gerente from '../../models/gerente-model';
-import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+import { Role } from "../../enums/role";
+import Cliente from "../../models/cliente-model";
+import User from "../../models/user-model";
+import bcrypt from "bcrypt";
+import validator from "validator";
+import Funcionario from "../../models/funcionario-model";
+import Gerente from "../../models/gerente-model";
+import { Controller, HttpRequest, HttpResponse } from "../../protocols";
+import { UsuarioService } from "../../service/usuario-service";
 class CriarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { nome, email, senha, role } = httpRequest.body;
 
       // Verifica se todos os campos obrigatórios foram preenchidos
-      if (!nome || !email || !senha || !role ) {
+      if (!nome || !email || !senha || !role) {
         return {
           statusCode: 400,
-          body: { error: 'Todos os campos são obrigatórios' },
+          body: { error: "Todos os campos são obrigatórios" },
         };
       }
       // Verifica se o nome tem pelo menos 3 caracteres
       if (nome.length < 3) {
         return {
           statusCode: 400,
-          body: { error: 'O nome deve ter pelo menos 3 caracteres' },
+          body: { error: "O nome deve ter pelo menos 3 caracteres" },
         };
       }
 
@@ -34,33 +35,28 @@ class CriarUsuarioController implements Controller {
       }
 
       // Validação dos dados de entrada
-      if(validator.isEmail(email) === false) {
+      if (validator.isEmail(email) === false) {
         return {
           statusCode: 400,
-          body: { error: 'Email inválido' },
+          body: { error: "Email inválido" },
         };
       }
-      const user = await User.findOne({ where: { email } });
+      const usuarioService = new UsuarioService();
+      const user = await usuarioService.buscarPorEmail( email);
 
       if (user) {
         return {
           statusCode: 400,
-          body: { error: 'Email já cadastrado' },
+          body: { error: "Email já cadastrado" },
         };
       }
 
-      const salt = 10;
-
-      const senhaCriptografada = await bcrypt.hash(senha, salt);
-
-      const usuario = await User.create({
+      const usuario = await usuarioService.criarUsuario({
         nome,
         email,
-        senha: senhaCriptografada,
-        role
+        senha,
+        role,
       });
-
-      await this.criarPerfil(usuario.id, role, nome);
 
       return {
         statusCode: 201,
@@ -75,21 +71,20 @@ class CriarUsuarioController implements Controller {
   }
 
   async criarPerfil(userId: number, role: string, nome: string) {
-    if(role === Role.CLIENTE) {
+    if (role === Role.CLIENTE) {
       await Cliente.create({
         nome,
-        userId
+        userId,
       });
-    } else if(role === Role.FUNCIONARIO) {
+    } else if (role === Role.FUNCIONARIO) {
       await Funcionario.create({
         nome,
-        userId
+        userId,
       });
-    }
-    else if(role === Role.GERENTE) {
+    } else if (role === Role.GERENTE) {
       await Gerente.create({
         nome,
-        userId
+        userId,
       });
     }
   }

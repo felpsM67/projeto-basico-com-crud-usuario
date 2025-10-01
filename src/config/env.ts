@@ -13,4 +13,5 @@ export const ENV = {
   NODE_ENV: process.env.NODE_ENV || "development",
   API_VERSION: process.env.API_VERSION || 'v1',
   UPDATE_MODEL: Boolean(process.env.UPDATE_MODEL) || false,
+  SALT: Number(process.env.SALT) || 10,
 };
