@@ -1,18 +1,18 @@
 import  User from '../../models/user-model';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+import { UsuarioService } from '../../service/usuario-service';
 class DeletarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const { id } = httpRequest.params;
     try {
-      const usuario = await User.findByPk(id);
-
-      if (!usuario) {
+      const usuarioService = new UsuarioService();
+      const result = await usuarioService.deletarUsuario(Number(id));
+      if (!result) {
         return {
           statusCode: 404,
-          body: { error: 'Usuário não encontrado' },
+          body: { error: 'Não foi possível deletar o usuario' }
         };
       }
-      await usuario.destroy();
       return {
         statusCode: 204,
         body: {},
