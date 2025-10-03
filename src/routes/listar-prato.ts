@@ -4,6 +4,6 @@ import ListarPratoController from "../controllers/prato/listar-prato";
 import { authMiddleware, authorizeRoles } from "../middlewares";
 
 export default (router: Router): void => {
-  router.get("/pratos",
+  router.get("/pratos/{:id}",
     adaptRoute(new ListarPratoController()));
 };
