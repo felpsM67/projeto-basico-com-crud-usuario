@@ -7,40 +7,11 @@ import Funcionario from "../../models/funcionario-model";
 import Gerente from "../../models/gerente-model";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 import { UsuarioService } from "../../service/usuario-service";
+import { created, serverError } from "../../helpers/http-helper";
 class CriarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { nome, email, senha, role } = httpRequest.body;
-
-      // Verifica se todos os campos obrigatórios foram preenchidos
-      if (!nome || !email || !senha || !role) {
-        return {
-          statusCode: 400,
-          body: { error: "Todos os campos são obrigatórios" },
-        };
-      }
-      // Verifica se o nome tem pelo menos 3 caracteres
-      if (nome.length < 3) {
-        return {
-          statusCode: 400,
-          body: { error: "O nome deve ter pelo menos 3 caracteres" },
-        };
-      }
-
-      if (!Object.values(Role).includes(role)) {
-        return {
-          statusCode: 400,
-          body: { error: `A role ${role} não existem nos papeis do sistema.` },
-        };
-      }
-
-      // Validação dos dados de entrada
-      if (validator.isEmail(email) === false) {
-        return {
-          statusCode: 400,
-          body: { error: "Email inválido" },
-        };
-      }
       const usuarioService = new UsuarioService();
       const user = await usuarioService.buscarPorEmail( email);
 
@@ -58,15 +29,9 @@ class CriarUsuarioController implements Controller {
         role,
       });
 
-      return {
-        statusCode: 201,
-        body: usuario,
-      };
+      return created(usuario);
     } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: { error: error.message },
-      };
+      return serverError();
     }
   }
 

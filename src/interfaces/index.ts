@@ -36,7 +36,7 @@ export interface LoginDTO {
   senha: string;
 }
 
-export interface AuthResponse {
+export interface AuthResponseDTO {
   token: string;
   userId: number;
   role: Role;
