@@ -1,4 +1,4 @@
-import  User from '../../models/user-model';
+import { noContent, notFound, serverError } from '../../helpers/http-helper';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 import { UsuarioService } from '../../service/usuario-service';
 class DeletarUsuarioController implements Controller {
@@ -8,20 +8,11 @@ class DeletarUsuarioController implements Controller {
       const usuarioService = new UsuarioService();
       const result = await usuarioService.deletarUsuario(Number(id));
       if (!result) {
-        return {
-          statusCode: 404,
-          body: { error: 'Não foi possível deletar o usuario' }
-        };
+        return notFound({ error: 'Usuário não encontrado' });
       }
-      return {
-        statusCode: 204,
-        body: {},
-      };
+      return noContent();
     } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: { error: error.message },
-      };
+      return serverError()
     }
   }
 }

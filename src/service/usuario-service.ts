@@ -6,9 +6,9 @@ import Funcionario from "../models/funcionario-model";
 import Gerente from "../models/gerente-model";
 import User from "../models/user-model";
 import bcrypt from "bcrypt";
-import type { CreateUserDTO } from "../schemas";
+import { CreateUserDTO, ResponseCreateUserDto } from "../types";
 
-export type ResponseCreateUserDto = Partial<CreateUserDTO> & { id: number };
+
 
 export class UsuarioService {
   async deletarUsuario(id: number): Promise<boolean> {

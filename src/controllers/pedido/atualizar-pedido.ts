@@ -1,6 +1,7 @@
-import { UpdatePedidoDTO } from "../../interfaces";
+import { ok, serverError } from "../../helpers/http-helper";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 import { PedidoService } from "../../service/pedido-service";
+import { UpdatePedidoDTO } from "../../types";
 
 export class AtualizarPedidoController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -11,16 +12,9 @@ export class AtualizarPedidoController implements Controller {
             const pedidoData: UpdatePedidoDTO = httpRequest.body;
             const id = httpRequest?.params.id;
             const pedidoAtualizado = await pedidoService.updatePedido(id, pedidoData);
-            return {
-                statusCode: 201,
-                body: pedidoAtualizado
-            };
+            return ok(pedidoAtualizado)
         } catch (error: any) {
-            return {
-                statusCode: 500,
-                body: { error: error.message }
-            };
-
+            return serverError(error)
         }
     }
 }
