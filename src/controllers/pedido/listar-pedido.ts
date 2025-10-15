@@ -1,3 +1,4 @@
+import { ok, serverError } from "../../helpers/http-helper";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 import { PedidoService } from "../../service/pedido-service";
 
@@ -8,16 +9,9 @@ export class ListarPedidoController implements Controller {
 
             const pedidoService = new PedidoService();
             const pedidos = pedidoService.getPedidos();
-            return {
-                statusCode: 200,
-                body: pedidos
-            };
+            return ok(pedidos);
         } catch (error: any) {
-            return {
-                statusCode: 500,
-                body: { error: error.message }
-            };
-
+            return serverError(error);
         }
     }
 }
