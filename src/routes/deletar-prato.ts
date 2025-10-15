@@ -4,8 +4,10 @@ import DeletarPratoController from "../controllers/prato/deletar-prato";
 import { authMiddleware, authorizeRoles } from "../middlewares";
 
 export default (router: Router): void => {
-  router.delete("/pratos/:id",
+  router.delete(
+    "/pratos/:id",
     authMiddleware,
-    authorizeRoles(['Gerente', 'Funcionario']),
-    adaptRoute(new DeletarPratoController()));
+    authorizeRoles(["Gerente", "Funcionario"]),
+    adaptRoute(new DeletarPratoController())
+  );
 };

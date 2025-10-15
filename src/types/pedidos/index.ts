@@ -1,5 +1,9 @@
 import * as z from "zod";
-import { createPedidoSchema, pedidoItemSchema, updatePedidoSchema } from "../../schemas";
+import {
+  createPedidoSchema,
+  pedidoItemSchema,
+  updatePedidoSchema,
+} from "../../schemas";
 
 export type PedidoItemDTO = z.infer<typeof pedidoItemSchema>;
 

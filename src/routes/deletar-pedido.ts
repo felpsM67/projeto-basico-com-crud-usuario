@@ -4,8 +4,10 @@ import { DeletarPedidoController } from "../controllers/pedido/deletar-pedido";
 import { authMiddleware, authorizeRoles } from "../middlewares";
 
 export default (router: Router): void => {
-    router.delete("/pedidos/{id}",
-        authMiddleware,
-        authorizeRoles(['Gerente', 'Funcionario']),
-        adaptRoute(new DeletarPedidoController()));
+  router.delete(
+    "/pedidos/{id}",
+    authMiddleware,
+    authorizeRoles(["Gerente", "Funcionario"]),
+    adaptRoute(new DeletarPedidoController())
+  );
 };

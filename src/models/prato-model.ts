@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../database';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../database";
 
 export class Prato extends Model {
   id!: number;
@@ -41,11 +41,11 @@ Prato.init(
     valor: {
       type: DataTypes.FLOAT,
       allowNull: false,
-    }
+    },
   },
   {
     sequelize,
-    modelName: 'Prato',
+    modelName: "Prato",
   }
 );
 
