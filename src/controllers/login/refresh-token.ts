@@ -1,56 +1,33 @@
 
 import User from '../../models/user-model';
-import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+import { forbidden, notFound, ok, serverError } from '../../helpers/http-helper';
+import { RefreshTokenDTO } from '../../types';
+import { TokenAdapter, Tokenizer } from '../../adapters/token-adapter';
 
 class RefreshTokenController implements Controller {
+
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { refreshToken } = httpRequest.body;
+      const { refreshToken }: RefreshTokenDTO = httpRequest.body;
 
       if (!refreshToken) {
-        return {
-          statusCode: 400,
-          body: { message: 'Refresh token é obrigatório' },
-        };
+        return notFound({ message: 'Refresh token é obrigatório' })
       }
+      const tokenizer = new TokenAdapter();
+      const decoded = tokenizer.verifyRefreshToken(refreshToken);
 
-      // Verifique o refresh token
-      // eslint-disable-next-line no-undef
-      const secret = process.env.JWT_REFRESH_SECRET;
-      if (!secret) {
-        throw new Error('JWT_REFRESH_SECRET is not defined');
-      }
-      const decoded = jwt.verify(refreshToken, secret) as JwtPayload;
-
-      // Opcional: Verifique se o refresh token ainda é válido no banco de dados
       const user = await User.findByPk(decoded.id);
       if (!user) {
-        return {
-          statusCode: 403,
-          body: { message: 'Refresh token inválido' },
-        };
+        return forbidden({ message: 'Refresh token inválido' })
       }
 
-      const signOptions: SignOptions = {
-        expiresIn: '15m',
-      };
-      // Gere um novo access token
-      const newAccessToken = jwt.sign(
-        { id: user.id, email: user.email },
-        process.env.JWT_SECRET || (() => { throw new Error('JWT_SECRET is not defined'); })(),
-        signOptions
-      );
+      const newAccessToken = tokenizer.generateToken(
+        { id: user.id, email: user.email });
 
-      return {
-        statusCode: 200,
-        body: { token: newAccessToken },
-      };
+      return ok({ token: newAccessToken })
     } catch (error: any) {
-      return {
-        statusCode: 500,
-        body: { message: 'Erro interno do servidor', error: error.message },
-      };
+      return serverError(error)
     }
   }
 }

@@ -1,48 +1,41 @@
+import { notFound, ok, serverError, unAuthorized } from '../../helpers/http-helper';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 import { LoginService } from '../../service/login-service';
+import { LoginDTO } from '../../types';
+import { ENV } from '../../config/env';
+import { BcryptAdapter } from '../../adapters/bcrypt-adapter';
+import { TokenAdapter } from '../../adapters/token-adapter';
 
 export class LoginController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { email, senha } = httpRequest.body;
+      const { email, senha }: LoginDTO = httpRequest.body;
 
-      const loginService = new LoginService();
+      const encrypter = new BcryptAdapter(ENV.SALT || 10);
+      const tokenizer = new TokenAdapter();
+      const loginService = new LoginService(encrypter, tokenizer);
 
       const response = await loginService.login({ email, senha });
 
       if (!response) {
-        return {
-          statusCode: 401,
-          body: { message: 'Credenciais inválidas' },
-        };
+        return unAuthorized({ message: 'Credenciais inválidas' });
       }
 
       const perfil = await loginService.buscarPerfilPorUserId(response);
       if (!perfil) {
-        return {
-          statusCode: 404,
-          body: { message: 'Usuário não encontrado, verificar cadastro.' },
-        };
+        return notFound({ message: 'Usuário não encontrado, verificar cadastro.' })
       }
       const user = perfil.user;
 
       const { token, refreshToken } = loginService.gerarTokens(user);
 
-      // Retornar sucesso (você pode adicionar lógica para gerar tokens aqui)
-      return {
-        statusCode: 200,
-        body: {
-          message: 'Login realizado com sucesso',
-          token,
-          refreshToken,
-        },
-      };
+      return ok({
+        message: 'Login realizado com sucesso',
+        token,
+        refreshToken,
+      })
     } catch (error) {
-      console.error('Erro no login:', error);
-      return {
-        statusCode: 500,
-        body: { message: 'Erro interno do servidor' },
-      };
+      return serverError(error)
     }
   }
 }

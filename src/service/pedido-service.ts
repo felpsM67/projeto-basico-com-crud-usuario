@@ -1,6 +1,6 @@
 import PedidoModel from "../models/pedido-model";
 import { StatusPedido } from "../enums/status-pedido";
-import { CreatePedidoDTO, UpdatePedidoDTO, PedidoItemDTO } from "../interfaces";
+import { CreatePedidoDTO, PedidoItemDTO, UpdatePedidoDTO } from "../types";
 
 export class PedidoService {
   async createPedido(dto: CreatePedidoDTO) {

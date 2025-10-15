@@ -1,5 +1,7 @@
+import { created, serverError } from "../../helpers/http-helper";
 import Prato from "../../models/prato-model";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
+import { CreatePratoDTO } from "../../types";
 
 export class CriarPratoController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -7,7 +9,7 @@ export class CriarPratoController implements Controller {
         try {
             const { nome, cozinha, descricao_resumida, descricao_detalhada, imagem, valor } = httpRequest.body;
         
-            const novoPrato = {
+            const novoPrato: CreatePratoDTO = {
                 nome,
                 cozinha,
                 descricao_resumida,
@@ -20,16 +22,9 @@ export class CriarPratoController implements Controller {
 
             const pratoSalvo = await Prato.findOne({ where: { nome } });
         
-            return {
-            statusCode: 201,
-            body: pratoSalvo
-            };
+            return created(pratoSalvo);
         } catch (error: any) {
-            return {
-                statusCode: 500,
-                body: { error: error.message }
-            };
-            
+            return serverError(error)
         }
     }
 }
