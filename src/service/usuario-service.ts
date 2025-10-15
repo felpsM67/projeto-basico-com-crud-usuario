@@ -1,16 +1,20 @@
-import { ENV } from "../config/env";
 import sequelize from "../database";
 import { Role } from "../enums/role";
 import Cliente from "../models/cliente-model";
 import Funcionario from "../models/funcionario-model";
 import Gerente from "../models/gerente-model";
 import User from "../models/user-model";
-import bcrypt from "bcrypt";
 import { CreateUserDTO, ResponseCreateUserDto } from "../types";
+import { Encrypter } from "../interfaces";
 
 
 
 export class UsuarioService {
+
+  private readonly encrypter: Encrypter;
+  public constructor(encrypter: Encrypter) {
+    this.encrypter = encrypter;
+  }
   async deletarUsuario(id: number): Promise<boolean> {
     const result = sequelize.transaction(async (t) => {
       const perfil = await this.__buscarPerfilPorUserId(id);
@@ -49,7 +53,7 @@ export class UsuarioService {
     if (!user) {
       return null;
     }
-    const senhaCriptografada = await bcrypt.hash(senha, ENV.SALT);
+    const senhaCriptografada = await this.encrypter.hash(senha);
     newUser.nome = nome || newUser.nome;
     newUser.email = email || newUser.email;
     newUser.senha = senha ? senhaCriptografada : newUser.senha;
@@ -67,7 +71,7 @@ export class UsuarioService {
     dadosUsuario: CreateUserDTO
   ): Promise<ResponseCreateUserDto> {
     const { nome, email, senha, role } = dadosUsuario;
-    const senhaCriptografada = await bcrypt.hash(senha, ENV.SALT);
+    const senhaCriptografada = await this.encrypter.hash(senha);
 
     const usuario = await User.create({
       nome,

@@ -2,13 +2,18 @@ import { notFound, ok, serverError, unAuthorized } from '../../helpers/http-help
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 import { LoginService } from '../../service/login-service';
 import { LoginDTO } from '../../types';
+import { ENV } from '../../config/env';
+import { BcryptAdapter } from '../../adapters/bcrypt-adapter';
+import { TokenAdapter } from '../../adapters/token-adapter';
 
 export class LoginController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { email, senha }: LoginDTO = httpRequest.body;
 
-      const loginService = new LoginService();
+      const encrypter = new BcryptAdapter(ENV.SALT || 10);
+      const tokenizer = new TokenAdapter();
+      const loginService = new LoginService(encrypter, tokenizer);
 
       const response = await loginService.login({ email, senha });
 
@@ -24,7 +29,6 @@ export class LoginController implements Controller {
 
       const { token, refreshToken } = loginService.gerarTokens(user);
 
-      // Retornar sucesso (você pode adicionar lógica para gerar tokens aqui)
       return ok({
         message: 'Login realizado com sucesso',
         token,
