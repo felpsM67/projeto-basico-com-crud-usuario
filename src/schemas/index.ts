@@ -113,3 +113,109 @@ export const createPratoSchema = z.object({
     })
     .optional(),
 });
+
+export const createClienteSchema = z.object({
+  nome: z
+    .string({ error: "O nome do cliente está incorreto" })
+    .min(3, { error: "O nome do cliente deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O nome do cliente deve ter no máximo 30 caracteres" }),
+  telefone: z
+    .string({ error: "O telefone está incorreto" })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" }),
+  endereco: z
+    .string({ error: "O endereço está incorreto" })
+    .min(5, { error: "O endereço deve ter no mínimo 5 caracteres" })
+    .max(100, { error: "O endereço deve ter no máximo 100 caracteres" }),
+  userId: z.number({ error: "O ID do usuário está incorreto" }),
+});
+
+export const createFuncionarioSchema = z.object({
+  nome: z
+    .string({ error: "O nome do funcionário está incorreto" })
+    .min(3, { error: "O nome do funcionário deve ter no mínimo 3 caracteres" })
+    .max(30, {
+      error: "O nome do funcionário deve ter no máximo 30 caracteres",
+    }),
+  telefone: z
+    .string({ error: "O telefone está incorreto" })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" }),
+  cargo: z
+    .string({ error: "O cargo está incorreto" })
+    .min(3, { error: "O cargo deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O cargo deve ter no máximo 30 caracteres" }),
+  userId: z.number({ error: "O ID do usuário está incorreto" }),
+});
+
+export const createGerenteSchema = z.object({
+  nome: z
+    .string({ error: "O nome do gerente está incorreto" })
+    .min(3, { error: "O nome do gerente deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O nome do gerente deve ter no máximo 30 caracteres" }),
+  telefone: z
+    .string({ error: "O telefone está incorreto" })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" }),
+  departamento: z
+    .string({ error: "O departamento está incorreto" })
+    .min(3, { error: "O departamento deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O departamento deve ter no máximo 30 caracteres" }),
+  userId: z.number({ error: "O ID do usuário está incorreto" }),
+});
+
+export const updateClienteSchema = z.object({
+  nome: z
+    .string({ error: "O nome do cliente está incorreto" })
+    .min(3, { error: "O nome do cliente deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O nome do cliente deve ter no máximo 30 caracteres" })
+    .optional(),
+  telefone: z
+    .string({ error: "O telefone está incorreto" })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" })
+    .optional(),
+  endereco: z
+    .string({ error: "O endereço está incorreto" })
+    .min(5, { error: "O endereço deve ter no mínimo 5 caracteres" })
+    .max(100, { error: "O endereço deve ter no máximo 100 caracteres" })
+    .optional(),
+});
+
+export const updateFuncionarioSchema = z.object({
+  nome: z
+    .string({ error: "O nome do funcionário está incorreto" })
+    .min(3, { error: "O nome do funcionário deve ter no mínimo 3 caracteres" })
+    .max(30, {
+      error: "O nome do funcionário deve ter no máximo 30 caracteres",
+    })
+    .optional(),
+  telefone: z
+    .string({ error: "O telefone está incorreto" })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" })
+    .optional(),
+  cargo: z
+    .string({ error: "O cargo está incorreto" })
+    .min(3, { error: "O cargo deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O cargo deve ter no máximo 30 caracteres" })
+    .optional(),
+});
+
+export const updateGerenteSchema = z.object({
+  nome: z
+    .string({ error: "O nome do gerente está incorreto" })
+    .min(3, { error: "O nome do gerente deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O nome do gerente deve ter no máximo 30 caracteres" })
+    .optional(),
+  telefone: z
+    .string({ error: "O telefone está incorreto" })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" })
+    .optional(),
+  departamento: z
+    .string({ error: "O departamento está incorreto" })
+    .min(3, { error: "O departamento deve ter no mínimo 3 caracteres" })
+    .max(30, { error: "O departamento deve ter no máximo 30 caracteres" })
+    .optional(),
+});

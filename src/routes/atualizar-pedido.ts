@@ -4,9 +4,10 @@ import { AtualizarPedidoController } from "../controllers/pedido/atualizar-pedid
 import { authMiddleware, authorizeRoles } from "../middlewares";
 
 export default (router: Router): void => {
-    router.put("/pedidos/{id}",
-        authMiddleware,
-        authorizeRoles(['Gerente', 'Funcionario']),
-        adaptRoute(new AtualizarPedidoController())
-    );
+  router.put(
+    "/pedidos/{id}",
+    authMiddleware,
+    authorizeRoles(["Gerente", "Funcionario"]),
+    adaptRoute(new AtualizarPedidoController())
+  );
 };

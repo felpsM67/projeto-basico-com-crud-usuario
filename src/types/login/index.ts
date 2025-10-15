@@ -1,5 +1,9 @@
 import * as z from "zod";
-import { authResponseSchema, loginSchema, refreshTokenSchema } from "../../schemas";
+import {
+  authResponseSchema,
+  loginSchema,
+  refreshTokenSchema,
+} from "../../schemas";
 
 export type LoginDTO = z.infer<typeof loginSchema>;
 

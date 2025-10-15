@@ -7,7 +7,7 @@ export default (router: Router): void => {
   router.get(
     "/users{/:id}",
     authMiddleware,
-    authorizeRoles(['Gerente', 'Funcionario']),
+    authorizeRoles(["Gerente", "Funcionario"]),
     adaptRoute(new ListarUsuarioController())
   );
 };

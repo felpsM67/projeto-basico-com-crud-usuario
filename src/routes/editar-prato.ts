@@ -4,8 +4,10 @@ import EditarPratoController from "../controllers/prato/editar-prato";
 import { authMiddleware, authorizeRoles } from "../middlewares";
 
 export default (router: Router): void => {
-     router.put("/pratos/:id",
-          authMiddleware,
-          authorizeRoles(['Gerente', 'Funcionario']),
-          adaptRoute(new EditarPratoController()));
+  router.put(
+    "/pratos/:id",
+    authMiddleware,
+    authorizeRoles(["Gerente", "Funcionario"]),
+    adaptRoute(new EditarPratoController())
+  );
 };

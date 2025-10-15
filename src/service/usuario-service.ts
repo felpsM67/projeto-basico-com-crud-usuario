@@ -1,16 +1,13 @@
 import sequelize from "../database";
 import { Role } from "../enums/role";
+import { Encrypter } from "../interfaces";
 import Cliente from "../models/cliente-model";
 import Funcionario from "../models/funcionario-model";
 import Gerente from "../models/gerente-model";
 import User from "../models/user-model";
 import { CreateUserDTO, ResponseCreateUserDto } from "../types";
-import { Encrypter } from "../interfaces";
-
-
 
 export class UsuarioService {
-
   private readonly encrypter: Encrypter;
   public constructor(encrypter: Encrypter) {
     this.encrypter = encrypter;

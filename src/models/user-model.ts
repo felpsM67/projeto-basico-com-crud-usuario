@@ -1,12 +1,12 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../database';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../database";
 
 export class User extends Model {
   id!: number;
   email!: string;
   senha!: string;
   nome!: string;
-  role!: 'Gerente' | 'Funcionario' | 'Cliente';
+  role!: "Gerente" | "Funcionario" | "Cliente";
 }
 
 User.init(
@@ -30,14 +30,14 @@ User.init(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM('Gerente', 'Funcionario', 'Cliente'),
+      type: DataTypes.ENUM("Gerente", "Funcionario", "Cliente"),
       allowNull: false,
-      defaultValue: 'Funcionario',
+      defaultValue: "Funcionario",
     },
   },
   {
     sequelize,
-    modelName: 'User',
+    modelName: "User",
   }
 );
 
