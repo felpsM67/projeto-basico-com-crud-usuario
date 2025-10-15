@@ -1,9 +1,9 @@
+import { Tokenizer } from "../adapters/token-adapter";
+import { Encrypter } from "../interfaces";
 import Cliente from "../models/cliente-model";
+import Funcionario from "../models/funcionario-model";
+import Gerente from "../models/gerente-model";
 import User from "../models/user-model";
-import Funcionario from '../models/funcionario-model';
-import Gerente from '../models/gerente-model';
-import { Encrypter } from '../interfaces';
-import { Tokenizer } from '../adapters/token-adapter';
 
 export class LoginService {
   private readonly encrypter;
@@ -12,7 +12,13 @@ export class LoginService {
     this.encrypter = encrypter;
     this.tokenizer = tokenizer;
   }
-  async login({ email, senha }: { email: string; senha: string }): Promise<null | number> {
+  async login({
+    email,
+    senha,
+  }: {
+    email: string;
+    senha: string;
+  }): Promise<null | number> {
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return null;
@@ -31,18 +37,31 @@ export class LoginService {
     if (!user) {
       return null;
     }
-    if (user.role === 'Funcionario') {
-      return Funcionario.findOne({ where: { userId } ,include: [{model: User, as: 'user'}] });
-    } else if (user.role === 'Cliente') {
-      return Cliente.findOne({ where: { userId } ,include: [{model: User, as: 'user'}] });
-    } else if (user.role === 'Gerente') {
-      return Gerente.findOne({ where: { userId } ,include: [{model: User, as: 'user'}] });
+    if (user.role === "Funcionario") {
+      return Funcionario.findOne({
+        where: { userId },
+        include: [{ model: User, as: "user" }],
+      });
+    } else if (user.role === "Cliente") {
+      return Cliente.findOne({
+        where: { userId },
+        include: [{ model: User, as: "user" }],
+      });
+    } else if (user.role === "Gerente") {
+      return Gerente.findOne({
+        where: { userId },
+        include: [{ model: User, as: "user" }],
+      });
     }
     return null;
   }
 
   gerarTokens(user: User) {
-    const token = this.tokenizer.generateToken({ id: user.id, email: user.email, role: user.role });
+    const token = this.tokenizer.generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
     const refreshToken = this.tokenizer.generateRefreshToken({ id: user.id });
     return { token, refreshToken };
   }

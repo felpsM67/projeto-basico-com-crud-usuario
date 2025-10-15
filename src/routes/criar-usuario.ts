@@ -6,9 +6,11 @@ import { validateBody } from "../middlewares/validate-body";
 import { createUserSchema } from "../schemas";
 
 export default (router: Router): void => {
-  router.post("/users",
+  router.post(
+    "/users",
     authMiddleware,
-    authorizeRoles(['Gerente', 'Funcionario']),
+    authorizeRoles(["Gerente", "Funcionario"]),
     validateBody(createUserSchema),
-    adaptRoute(new CriarUsuarioController()));
+    adaptRoute(new CriarUsuarioController())
+  );
 };

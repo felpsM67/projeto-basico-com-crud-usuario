@@ -18,13 +18,14 @@ export class TokenAdapter implements Tokenizer {
   }
   generateToken(payload: object): string {
     const secret = ENV.JWT_SECRET;
-    const expiresIn = (ENV.JWT_EXPIRES_IN as SignOptions['expiresIn']) || '15m';
+    const expiresIn = (ENV.JWT_EXPIRES_IN as SignOptions["expiresIn"]) || "15m";
     const options: SignOptions = { expiresIn };
     return jwt.sign(payload, secret, options);
   }
   generateRefreshToken(payload: object): string {
     const secret = ENV.JWT_REFRESH_SECRET;
-    const expiresIn = (ENV.JWT_REFRESH_EXPIRES_IN as SignOptions['expiresIn']) || '7d';
+    const expiresIn =
+      (ENV.JWT_REFRESH_EXPIRES_IN as SignOptions["expiresIn"]) || "7d";
     const options: SignOptions = { expiresIn };
     return jwt.sign(payload, secret, options);
   }

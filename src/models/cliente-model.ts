@@ -1,6 +1,6 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../database';
-import User from './user-model';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../database";
+import User from "./user-model";
 
 export class Cliente extends Model {
   id!: number;
@@ -34,15 +34,15 @@ Cliente.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users', // Name of the target model
-        key: 'id', // Key in the target model that we're referencing
+        model: "Users", // Name of the target model
+        key: "id", // Key in the target model that we're referencing
       },
     },
   },
   {
     sequelize,
-    modelName: 'Cliente',
+    modelName: "Cliente",
   }
 );
-Cliente.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Cliente.belongsTo(User, { foreignKey: "userId", as: "user" });
 export default Cliente;

@@ -1,5 +1,5 @@
-import PedidoModel from "../models/pedido-model";
 import { StatusPedido } from "../enums/status-pedido";
+import PedidoModel from "../models/pedido-model";
 import { CreatePedidoDTO, PedidoItemDTO, UpdatePedidoDTO } from "../types";
 
 export class PedidoService {

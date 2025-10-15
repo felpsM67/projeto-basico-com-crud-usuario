@@ -1,6 +1,6 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../database';
-import User from './user-model';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../database";
+import User from "./user-model";
 
 class Funcionario extends Model {
   id!: number;
@@ -35,15 +35,15 @@ Funcionario.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users', // Name of the target model
-        key: 'id', // Key in the target model that we're referencing
+        model: "Users", // Name of the target model
+        key: "id", // Key in the target model that we're referencing
       },
     },
   },
   {
     sequelize,
-    modelName: 'Funcionario',
+    modelName: "Funcionario",
   }
 );
-Funcionario.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Funcionario.belongsTo(User, { foreignKey: "userId", as: "user" });
 export default Funcionario;

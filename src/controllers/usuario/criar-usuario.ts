@@ -1,16 +1,16 @@
-import { Controller, HttpRequest, HttpResponse } from "../../protocols";
-import { UsuarioService } from "../../service/usuario-service";
-import { badRequest, created, serverError } from "../../helpers/http-helper";
-import { InvalidParamError } from "../../errors";
 import { BcryptAdapter } from "../../adapters/bcrypt-adapter";
 import { ENV } from "../../config/env";
+import { InvalidParamError } from "../../errors";
+import { badRequest, created, serverError } from "../../helpers/http-helper";
+import { Controller, HttpRequest, HttpResponse } from "../../protocols";
+import { UsuarioService } from "../../service/usuario-service";
 class CriarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { nome, email, senha, role } = httpRequest.body;
-      const encrypter = new BcryptAdapter(ENV.SALT)
+      const encrypter = new BcryptAdapter(ENV.SALT);
       const usuarioService = new UsuarioService(encrypter);
-      const user = await usuarioService.buscarPorEmail( email);
+      const user = await usuarioService.buscarPorEmail(email);
       if (user) {
         return badRequest(new InvalidParamError("email"));
       }
