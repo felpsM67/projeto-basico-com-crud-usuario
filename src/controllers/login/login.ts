@@ -1,6 +1,7 @@
 import { BcryptAdapter } from "../../adapters/bcrypt-adapter";
 import { TokenAdapter } from "../../adapters/token-adapter";
 import { ENV } from "../../config/env";
+import { unAuthorizedError } from "../../errors/unauthorized-error";
 import {
   notFound,
   ok,
@@ -23,7 +24,7 @@ export class LoginController implements Controller {
       const response = await loginService.login({ email, senha });
 
       if (!response) {
-        return unAuthorized({ message: "Credenciais inválidas" });
+        return unAuthorized(new unAuthorizedError());
       }
 
       const perfil = await loginService.buscarPerfilPorUserId(response);
