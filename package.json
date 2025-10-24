@@ -4,23 +4,30 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/server.ts"
+    "start": "nodemon src/server.ts",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:covs": "jest --coverage"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.2",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.21",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/yamljs": "^0.2.34",
+    "jest": "^30.2.0",
     "nodemon": "^3.1.10",
     "sucrase": "^3.35.0",
+    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@jest/types": "^30.2.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
