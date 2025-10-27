@@ -3,7 +3,8 @@ import config from "./config/config.json";
 type ConfigKeys = "development";
 const env = (process.env.NODE_ENV || "development") as ConfigKeys;
 const dbConfig = config[env];
-const sequelize = new Sequelize(
+
+const sequelize = process.env.NODE_ENV !== "test" ? new Sequelize(
   dbConfig.database,
   dbConfig.username,
   dbConfig.password,
@@ -13,5 +14,5 @@ const sequelize = new Sequelize(
     port: dbConfig.port,
     logging: false,
   }
-);
+) : new Sequelize({ dialect: 'sqlite', storage: ':memory:', logging: false });
 export default sequelize;
