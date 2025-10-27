@@ -21,8 +21,8 @@ class CriarUsuarioController implements Controller {
         role,
       });
       return created(usuario);
-    } catch (error: any) {
-      return serverError();
+    } catch (error: Error|unknown) {
+      return serverError(error);
     }
   }
 }
