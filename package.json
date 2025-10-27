@@ -7,10 +7,12 @@
     "start": "nodemon src/server.ts",
     "dev": "nodemon --exec ts-node src/server.ts",
     "test": "NODE_ENV=test jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "test:verbose": "jest --passWithNoTests --runInBand",
-    "test:watch": "yarn test -- --watch",
-    "test:cov": "yarn test -- --coverage",
-    "test:clear": "npx jest --clearCache"
+    "test:verbose": "NODE_ENV=test jest --passWithNoTests --runInBand",
+    "test:clear": "npx jest --clearCache",
+    "test:unit": "npm test -- --watch -c jest-unit-config.ts",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
