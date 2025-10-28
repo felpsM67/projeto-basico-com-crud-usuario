@@ -7,7 +7,7 @@ export class Prato extends Model {
   cozinha!: string;
   descricao_resumida!: string;
   descricao_detalhada!: string;
-  imagem: string;
+  imagem!: string;
   valor!: number;
 }
 

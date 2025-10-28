@@ -5,6 +5,10 @@ module.exports = {
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/*protocols.ts'
   ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  testEnvironment: 'node',
   coverageDirectory: 'coverage',
   transform: {
     '.+\\.ts$': 'ts-jest'
