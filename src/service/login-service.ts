@@ -4,6 +4,7 @@ import Cliente from "../models/cliente-model";
 import Funcionario from "../models/funcionario-model";
 import Gerente from "../models/gerente-model";
 import User from "../models/user-model";
+import { LoginDTO } from "../types";
 
 export class LoginService {
   private readonly encrypter;
@@ -12,13 +13,7 @@ export class LoginService {
     this.encrypter = encrypter;
     this.tokenizer = tokenizer;
   }
-  async login({
-    email,
-    senha,
-  }: {
-    email: string;
-    senha: string;
-  }): Promise<null | number> {
+  async login({ email, senha }: LoginDTO): Promise<null | number> {
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return null;
@@ -32,23 +27,25 @@ export class LoginService {
     return user.id;
   }
 
-  async buscarPerfilPorUserId(userId: number) {
+  async buscarPerfilPorUserId(
+    userId: number
+  ): Promise<null | Cliente | Funcionario | Gerente> {
     const user = await User.findByPk(userId);
     if (!user) {
       return null;
     }
     if (user.role === "Funcionario") {
-      return Funcionario.findOne({
+      return await Funcionario.findOne({
         where: { userId },
         include: [{ model: User, as: "user" }],
       });
     } else if (user.role === "Cliente") {
-      return Cliente.findOne({
+      return await Cliente.findOne({
         where: { userId },
         include: [{ model: User, as: "user" }],
       });
     } else if (user.role === "Gerente") {
-      return Gerente.findOne({
+      return await Gerente.findOne({
         where: { userId },
         include: [{ model: User, as: "user" }],
       });
