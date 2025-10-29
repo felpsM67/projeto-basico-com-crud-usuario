@@ -1,6 +1,3 @@
-import { BcryptAdapter } from "../../adapters/bcrypt-adapter";
-import { TokenAdapter } from "../../adapters/token-adapter";
-import { ENV } from "../../config/env";
 import { unAuthorizedError } from "../../errors/unauthorized-error";
 import {
   notFound,

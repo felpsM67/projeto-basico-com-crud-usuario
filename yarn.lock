@@ -775,16 +775,7 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@*":
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-5.0.4.tgz#975e7fc1097066a83b992fd2bb8a4819622e8bae"
-  integrity sha512-g64dbryHk7loCIrsa0R3shBnEu5p6LPJ09bu9NG58+jz+cRUjFrc3Bz0kNQ7j9bXeCsrRDvNET1G54P/GJkAyA==
-  dependencies:
-    "@types/body-parser" "*"
-    "@types/express-serve-static-core" "^5.0.0"
-    "@types/serve-static" "*"
-
-"@types/express@^5.0.2":
+"@types/express@*", "@types/express@^5.0.2":
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-5.0.5.tgz#3ba069177caa34ab96585ca23b3984d752300cdc"
   integrity sha512-LuIQOcb6UmnF7C1PCFmEU1u2hmiHL43fgFQX67sN3H4Z+0Yk0Neo++mFsBjhOAuLzvlQeqAAkeDOZrJs9rzumQ==
@@ -861,9 +852,9 @@
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
 "@types/node@*":
-  version "24.9.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.9.1.tgz#b7360b3c789089e57e192695a855aa4f6981a53c"
-  integrity sha512-QoiaXANRkSXK6p0Duvt56W208du4P9Uye9hWLWgGMDTEoKPhuenzNcC4vGUmrNkiOKTlIrBoyNQYNpSwfEZXSg==
+  version "24.9.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.9.2.tgz#90ded2422dbfcafcf72080f28975adc21366148d"
+  integrity sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA==
   dependencies:
     undici-types "~7.16.0"
 
@@ -899,7 +890,15 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
-"@types/serve-static@*", "@types/serve-static@^1":
+"@types/serve-static@*":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-2.2.0.tgz#d4a447503ead0d1671132d1ab6bd58b805d8de6a"
+  integrity sha512-8mam4H1NHLtu7nmtalF7eyBH14QyOASmcxHhSfEoRyr0nP/YdoesEtU+uSRvMe96TW/HPTtkoKqQLl53N7UXMQ==
+  dependencies:
+    "@types/http-errors" "*"
+    "@types/node" "*"
+
+"@types/serve-static@^1":
   version "1.15.10"
   resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-1.15.10.tgz#768169145a778f8f5dfcb6360aead414a3994fee"
   integrity sha512-tRs1dB+g8Itk72rlSI2ZrW6vZg0YrLI81iQSTkMmOqnqCaNr/8Ek4VwWcN5vZgCYWbg/JJSGBlUaYGAOP73qBw==
@@ -945,9 +944,9 @@
     "@types/serve-static" "*"
 
 "@types/validator@^13.7.17":
-  version "13.15.3"
-  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.15.3.tgz#67e8aeacbace03517f9bd3f99e750bb666207ff4"
-  integrity sha512-7bcUmDyS6PN3EuD9SlGGOxM77F8WLVsrwkxyWxKnxzmXoequ6c7741QBrANq6htVRGOITJ7z72mTP6Z4XyuG+Q==
+  version "13.15.4"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.15.4.tgz#38a97ae54747416f745afdfc678f041713082635"
+  integrity sha512-LSFfpSnJJY9wbC0LQxgvfb+ynbHftFo0tMsFOl/J4wexLnYMmDSPaj2ZyDv3TkfL1UePxPrxOWJfbiRS8mQv7A==
 
 "@types/yamljs@^0.2.34":
   version "0.2.34"
@@ -1179,9 +1178,9 @@ base64-js@^1.3.1:
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
 baseline-browser-mapping@^2.8.19:
-  version "2.8.20"
-  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.20.tgz#6766cf270f3668d20b6712b9c54cc911b87da714"
-  integrity sha512-JMWsdF+O8Orq3EMukbUN1QfbLK9mX2CkUmQBcW2T0s8OmdAUL5LLM/6wFwSrqXzlXB13yhyK9gTKS1rIizOduQ==
+  version "2.8.21"
+  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.21.tgz#2f9cccde871bfa4aec9dbf92d0ee746e4f1892e4"
+  integrity sha512-JU0h5APyQNsHOlAM7HnQnPToSDQoEBZqzu/YBlqDnEeymPnZDREeXJA3KBMQee+dKteAxZ2AtvQEvVYdZf241Q==
 
 bcrypt@^6.0.0:
   version "6.0.0"
@@ -1700,9 +1699,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.5.238:
-  version "1.5.240"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.240.tgz#bfd946570a723aa3754370065d02e23e30824774"
-  integrity sha512-OBwbZjWgrCOH+g6uJsA2/7Twpas2OlepS9uvByJjR2datRDuKGYeD+nP8lBBks2qnB7bGJNHDUx7c/YLaT3QMQ==
+  version "1.5.243"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.243.tgz#b13b4a046f49f46574d643d4e2ec2ea33ce8cfe7"
+  integrity sha512-ZCphxFW3Q1TVhcgS9blfut1PX8lusVi2SvXQgmEEnK4TCmE1JhH2JkjJN+DNt0pJJwfBri5AROBnz2b/C+YU9g==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -3348,9 +3347,9 @@ node-int64@^0.4.0:
   integrity sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==
 
 node-releases@^2.0.26:
-  version "2.0.26"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.26.tgz#fdfa272f2718a1309489d18aef4ef5ba7f5dfb52"
-  integrity sha512-S2M9YimhSjBSvYnlr5/+umAnPHE++ODwt5e2Ij6FoX45HA/s4vHdkDx1eax2pAPeAOqu4s9b7ppahsyEFdVqQA==
+  version "2.0.27"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.27.tgz#eedca519205cf20f650f61d56b070db111231e4e"
+  integrity sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==
 
 nodemon@^3.1.10:
   version "3.1.10"
