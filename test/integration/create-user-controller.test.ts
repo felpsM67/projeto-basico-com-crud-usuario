@@ -48,7 +48,7 @@ describe("CreateUserController (integration)", () => {
     expect(resp.status).toBe(401);
     expect(resp.type).toMatch(/json/);
     expect(resp.body).toEqual({
-      message: "Token ausente",
+      message: "Credenciais ausentes ou inválidas",
     });
   });
 
