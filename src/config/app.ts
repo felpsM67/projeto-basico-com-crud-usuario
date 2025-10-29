@@ -7,7 +7,7 @@ import setupRoutes from "./routes";
 
 // Carregar o arquivo YAML
 const swaggerDocument = yaml.load(
-  path.resolve(__dirname, "../docs/api/swagger.yaml")
+  path.resolve(__dirname, "..","docs", "api", "swagger.yaml")
 );
 
 const app = express();
