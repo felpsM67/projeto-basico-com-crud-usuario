@@ -1,9 +1,9 @@
-import { BcryptAdapter } from "../../adapters/bcrypt-adapter";
-import { ENV } from "../../config/env";
-import { InvalidParamError } from "../../errors";
-import { badRequest, created, serverError } from "../../helpers/http-helper";
-import { Controller, HttpRequest, HttpResponse } from "../../protocols";
-import { UsuarioService } from "../../service/usuario-service";
+import { BcryptAdapter } from "@/adapters/bcrypt-adapter";
+import { ENV } from "@/config/env";
+import { InvalidParamError } from "@/errors";
+import { badRequest, created, serverError } from "@/helpers/http-helper";
+import { Controller, HttpRequest, HttpResponse } from "@/protocols";
+import { UsuarioService } from "@/service/usuario-service";
 class CriarUsuarioController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
