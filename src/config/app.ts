@@ -1,14 +1,13 @@
 import express from "express";
-import path from "path";
 import swaggerUi from "swagger-ui-express";
-import yaml from "yamljs";
+import YAML from "yamljs";
 import setupMiddlewares from "./middlewares";
 import setupRoutes from "./routes";
+import { resolveRuntimePath } from './paths';
 
 // Carregar o arquivo YAML
-const swaggerDocument = yaml.load(
-  path.resolve(__dirname, "..","docs", "api", "swagger.yaml")
-);
+const swaggerFile = resolveRuntimePath('docs/api/swagger.yaml');
+const swaggerDocument = YAML.load(swaggerFile);
 
 const app = express();
 app.get("/", (req, res) => {
