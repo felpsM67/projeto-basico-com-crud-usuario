@@ -1,7 +1,7 @@
 import { Router } from "express";
 import adaptRoute from "../adapters/express-route-adapter";
-import LoginController from "../controllers/login/login";
+import { LoginControllerFactory } from "@/factories/controller/login/login-controller-factory";
 
 export default (router: Router): void => {
-  router.post("/login", adaptRoute(new LoginController()));
+  router.post("/login", adaptRoute(LoginControllerFactory()));
 };
