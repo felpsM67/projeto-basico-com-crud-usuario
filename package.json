@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "clear:packages": "rimraf node_modules && rimraf package-lock.json && rimraf dist && rimraf tsconfig.tsbuildinfo && npm install",
-    "build": "NODE_ENV=production npm run clear:packages && tsc -p tsconfig.json && tsc-alias -p tsconfig.json && npm run copy:swagger",
+    "clear:packages": "rimraf package-lock.json && rimraf dist && rimraf tsconfig.tsbuildinfo && rimraf node_modules &&npm install",
+    "build": "NODE_ENV=production tsc -p tsconfig.json && tsc-alias -p tsconfig.json && npm run copy:swagger",
     "start": "node dist/server.js",
     "start:debug": "node --inspect dist/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
