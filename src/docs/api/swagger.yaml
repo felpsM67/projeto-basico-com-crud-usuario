@@ -260,7 +260,7 @@ paths:
           description: Token inválido ou expirado
         500:
           description: Algum erro aconteceu
-  /pedidos:
+  /api/pedidos:
     get:
       summary: Lista todos os pedidos
       security: 
@@ -312,7 +312,7 @@ paths:
           description: Token inválido ou ausente
         403:
           description: Sem permissão
-  /pedidos/{id}:
+  /api/pedidos/{id}:
     get:
       summary: Busca pedido por ID
       security: 
