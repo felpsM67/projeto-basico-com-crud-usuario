@@ -4,7 +4,7 @@ import { Sequelize } from "sequelize";
 import { ENV } from "./env";
 
 export const initializeDatabaseAndServer = async (sequelize: Sequelize) => {
-  if (ENV.UPDATE_MODEL) return; // evita sobrescrita se flag estiver habilitada
+  if (!ENV.UPDATE_MODEL) return; // evita sobrescrita se flag estiver habilitada
 
   try {
     const modelsPath = path.resolve(__dirname, "../models");

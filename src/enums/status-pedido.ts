@@ -1,6 +1,6 @@
 export enum StatusPedido {
-  CRIADO = "Criado",
-  PAGO = "Pago",
-  ENVIADO = "Enviado",
-  CANCELADO = "Cancelado",
+  CRIADO = "CRIADO",
+  PAGO = "PAGO",
+  ENVIADO = "ENVIADO",
+  CANCELADO = "CANCELADO",
 }

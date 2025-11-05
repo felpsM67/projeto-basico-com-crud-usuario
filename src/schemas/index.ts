@@ -10,6 +10,11 @@ export const createUserSchema = z.object({
     .string({ error: "A senha é obrigatória" })
     .min(6, { error: "A senha deve ter no minimo 6 caracteres" })
     .max(8, { error: "A senha deve ter no máximo 8 caracteres" }),
+  telefone: z
+    .string()
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" })
+    .optional(),
   role: z.enum(["Gerente", "Funcionario", "Cliente"], {
     error: "A role deve ser 'Gerente', 'Funcionario' ou 'Cliente'",
   }),
@@ -73,6 +78,7 @@ export const updatePedidoSchema = z.object({
 
 export const createPedidoSchema = z.object({
   usuarioId: z.number({ error: "O ID do usuário é obrigatório." }),
+  clienteTelefone: z.string({ error: "O telefone do cliente é obrigatório." }),
   itens: z
     .array(pedidoItemSchema, {
       error: "Os itens do pedido estão incorretos",
