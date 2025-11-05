@@ -50,7 +50,9 @@ export class UsuarioService {
     if (!user) {
       return null;
     }
-    const senhaCriptografada = senha ? await this.encrypter.hash(senha): user.senha;
+    const senhaCriptografada = senha
+      ? await this.encrypter.hash(senha)
+      : user.senha;
     newUser.nome = nome || newUser.nome;
     newUser.email = email || newUser.email;
     newUser.senha = senha ? senhaCriptografada : newUser.senha;
@@ -77,7 +79,7 @@ export class UsuarioService {
       role,
     });
 
-    await this.__criarPerfil({ userId: usuario.id, role, nome });
+    await this.__criarPerfil({ userId: usuario.id, role, nome, telefone: dadosUsuario?.telefone });
     return {
       id: usuario.id,
       nome: usuario.nome,
@@ -114,15 +116,18 @@ export class UsuarioService {
     userId,
     role,
     nome,
+    telefone,
   }: {
     userId: number;
     role: string;
     nome: string;
+    telefone?: string;
   }) {
     if (role === Role.CLIENTE) {
       await Cliente.create({
         nome,
         userId,
+        telefone,
       });
     } else if (role === Role.FUNCIONARIO) {
       await Funcionario.create({

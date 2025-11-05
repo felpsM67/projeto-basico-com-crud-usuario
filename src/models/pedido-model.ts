@@ -9,7 +9,7 @@ export class Pedido extends Model {
   prato_id!: number;
   quantidade!: number;
   total!: number;
-  status!: "PENDENTE" | "EM_PREPARO" | "ENTREGUE";
+  status!: "CRIADO" | "PAGO" | "ATUALIZADO" | "CANCELADO";
 }
 
 Pedido.init(
@@ -48,8 +48,8 @@ Pedido.init(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("PENDENTE", "EM_PREPARO", "ENTREGUE"),
-      defaultValue: "PENDENTE",
+      type: DataTypes.ENUM("CRIADO", "PAGO", "ATUALIZADO", "CANCELADO"),
+      defaultValue: "CRIADO",
       allowNull: false,
     },
   },

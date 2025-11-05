@@ -4,7 +4,7 @@ import { Sequelize } from "sequelize";
 import { ENV } from "./env";
 
 export const initializeDatabaseAndServer = async (sequelize: Sequelize) => {
-  if (ENV.UPDATE_MODEL) return; // evita sobrescrita se flag estiver habilitada
+  if (!ENV.UPDATE_MODEL) return; // evita sobrescrita se flag estiver habilitada
 
   try {
     const modelsPath = path.resolve(__dirname, "../models");
@@ -13,7 +13,8 @@ export const initializeDatabaseAndServer = async (sequelize: Sequelize) => {
       return;
     }
 
-    const exts = process.env.NODE_ENV === "production" ? [".js"] : [".ts", ".js"];
+    const exts =
+      process.env.NODE_ENV === "production" ? [".js"] : [".ts", ".js"];
     const modelFiles = fs
       .readdirSync(modelsPath)
       .filter((file) => exts.some((ext) => file.endsWith(`-model${ext}`)));
@@ -25,7 +26,7 @@ export const initializeDatabaseAndServer = async (sequelize: Sequelize) => {
       const mod = await import(path.join(modelsPath, file));
       const model = mod.default ?? mod;
       const modelName = file.replace(/-model\.(ts|js)$/, "");
-      db[modelName] = model(sequelize);
+      db[modelName] = model;
     }
 
     // Associações padrão (se o model expuser .associate)
