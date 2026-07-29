@@ -20,6 +20,25 @@ export const createUserSchema = z.object({
   }),
 });
 
+export const createCategoriaSchema = z.object({
+  nome: z
+    .string({ error: "O nome da categoria é obrigatório." })
+    .min(3, { error: "O nome da categoria deve ter no mínimo 3 caracteres" })
+    .max(30, {
+      error: "O nome da categoria deve ter no máximo 30 caracteres",
+    }),
+
+  descricao: z
+    .string({ error: "A descrição da categoria está incorreta." })
+    .min(10, {
+      error: "A descrição da categoria deve ter no mínimo 10 caracteres",
+    })
+    .max(200, {
+      error: "A descrição da categoria deve ter no máximo 200 caracteres",
+    })
+    .optional(),
+});
+
 export const updateUserSchema = z.object({
   nome: z
     .string({ error: "O nome de usuario é obrigatório." })
@@ -228,5 +247,25 @@ export const updateGerenteSchema = z.object({
     .string({ error: "O departamento é obrigatório." })
     .min(3, { error: "O departamento deve ter no mínimo 3 caracteres" })
     .max(30, { error: "O departamento deve ter no máximo 30 caracteres" })
+    .optional(),
+});
+
+export const updateCategoriaSchema = z.object({
+  nome: z
+    .string({ error: "O nome da categoria é obrigatório." })
+    .min(3, { error: "O nome da categoria deve ter no mínimo 3 caracteres" })
+    .max(30, {
+      error: "O nome da categoria deve ter no máximo 30 caracteres",
+    })
+    .optional(),
+
+  descricao: z
+    .string({ error: "A descrição da categoria está incorreta." })
+    .min(10, {
+      error: "A descrição da categoria deve ter no mínimo 10 caracteres",
+    })
+    .max(200, {
+      error: "A descrição da categoria deve ter no máximo 200 caracteres",
+    })
     .optional(),
 });
