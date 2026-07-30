@@ -1,7 +1,7 @@
 import { Router } from "express";
-import adaptRoute from "../adapters/express-route-adapter";
-import EditarUsuarioController from "../controllers/usuario/editar-usuario";
-import { authMiddleware, authorizeRoles } from "../middlewares";
+import adaptRoute from "../../adapters/express-route-adapter";
+import EditarUsuarioController from "../../controllers/usuario/editar-usuario";
+import { authMiddleware, authorizeRoles } from "../../middlewares";
 
 export default (router: Router): void => {
   router.put(
