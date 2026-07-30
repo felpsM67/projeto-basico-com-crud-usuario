@@ -269,3 +269,38 @@ export const updateCategoriaSchema = z.object({
     })
     .optional(),
 });
+export const createAdicionalSchema = z.object({
+  nomeAdicional: z
+    .string({ error: "O nome do adicional é obrigatório." })
+    .min(3, {
+      error: "O nome do adicional deve ter no mínimo 3 caracteres",
+    })
+    .max(50, {
+      error: "O nome do adicional deve ter no máximo 50 caracteres",
+    }),
+
+  valor: z
+    .number({ error: "O valor do adicional deve ser um número" })
+    .min(0, {
+      error: "O valor do adicional deve ser igual ou maior que 0",
+    }),
+});
+
+export const updateAdicionalSchema = z.object({
+  nomeAdicional: z
+    .string({ error: "O nome do adicional está incorreto." })
+    .min(3, {
+      error: "O nome do adicional deve ter no mínimo 3 caracteres",
+    })
+    .max(50, {
+      error: "O nome do adicional deve ter no máximo 50 caracteres",
+    })
+    .optional(),
+
+  valor: z
+    .number({ error: "O valor do adicional deve ser um número" })
+    .min(0, {
+      error: "O valor do adicional deve ser igual ou maior que 0",
+    })
+    .optional(),
+});

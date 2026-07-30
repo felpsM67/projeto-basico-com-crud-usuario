@@ -5,7 +5,7 @@ import { authMiddleware } from "../../middlewares";
 
 export default (router: Router): void => {
   router.post(
-    "/pedidos/",
+    "/pedidos",
     authMiddleware,
     adaptRoute(new CriarPedidoController())
   );
