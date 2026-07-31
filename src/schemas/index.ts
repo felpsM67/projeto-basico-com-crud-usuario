@@ -304,3 +304,49 @@ export const updateAdicionalSchema = z.object({
     })
     .optional(),
 });
+export const createEntregadorSchema = z.object({
+  nome: z
+    .string({ error: "O nome do entregador é obrigatório." })
+    .min(3, { error: "O nome deve ter no mínimo 3 caracteres" })
+    .max(50, { error: "O nome deve ter no máximo 50 caracteres" }),
+
+  telefone: z
+    .string({ error: "O telefone é obrigatório." })
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" }),
+
+  documento: z
+    .string({ error: "O documento é obrigatório." })
+    .min(11, { error: "O documento deve ter no mínimo 11 caracteres" })
+    .max(14, { error: "O documento deve ter no máximo 14 caracteres" }),
+
+  userId: z.number({ error: "O ID do usuário é obrigatório." }),
+
+  disponivel: z.boolean().optional(),
+
+  ativo: z.boolean().optional(),
+});
+
+export const updateEntregadorSchema = z.object({
+  nome: z
+    .string()
+    .min(3, { error: "O nome deve ter no mínimo 3 caracteres" })
+    .max(50, { error: "O nome deve ter no máximo 50 caracteres" })
+    .optional(),
+
+  telefone: z
+    .string()
+    .min(10, { error: "O telefone deve ter no mínimo 10 caracteres" })
+    .max(15, { error: "O telefone deve ter no máximo 15 caracteres" })
+    .optional(),
+
+  documento: z
+    .string()
+    .min(11, { error: "O documento deve ter no mínimo 11 caracteres" })
+    .max(14, { error: "O documento deve ter no máximo 14 caracteres" })
+    .optional(),
+
+  disponivel: z.boolean().optional(),
+
+  ativo: z.boolean().optional(),
+});
