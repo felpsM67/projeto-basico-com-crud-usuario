@@ -319,6 +319,15 @@ export const createEntregadorSchema = z.object({
     .string({ error: "O documento é obrigatório." })
     .min(11, { error: "O documento deve ter no mínimo 11 caracteres" })
     .max(14, { error: "O documento deve ter no máximo 14 caracteres" }),
+   placa: z
+    .string({ error: "A placa é obrigatória." })
+    .min(7, { error: "A placa deve ter no mínimo 7 caracteres" })
+    .max(8, { error: "A placa deve ter no máximo 8 caracteres" }),
+
+  veiculos: z
+    .string({ error: "O veículo é obrigatório." })
+    .min(2, { error: "O veículo deve ter no mínimo 2 caracteres" })
+    .max(50, { error: "O veículo deve ter no máximo 50 caracteres" }),
 
   userId: z.number({ error: "O ID do usuário é obrigatório." }),
 
@@ -346,7 +355,84 @@ export const updateEntregadorSchema = z.object({
     .max(14, { error: "O documento deve ter no máximo 14 caracteres" })
     .optional(),
 
+  placa: z
+    .string()
+    .min(7, { error: "A placa deve ter no mínimo 7 caracteres" })
+    .max(8, { error: "A placa deve ter no máximo 8 caracteres" })
+    .optional(),
+
+  veiculos: z
+    .string()
+    .min(2, { error: "O veículo deve ter no mínimo 2 caracteres" })
+    .max(50, { error: "O veículo deve ter no máximo 50 caracteres" })
+    .optional(),
+
+
   disponivel: z.boolean().optional(),
 
   ativo: z.boolean().optional(),
+});
+
+export const createConfiguracoesSchema = z.object({
+  nomeLoja: z
+    .string({ error: "O nome da loja é obrigatório" })
+    .min(3, { message: "O nome da loja deve ter no mínimo 3 caracteres" })
+    .max(100, { message: "O nome da loja deve ter no máximo 100 caracteres" }),
+  numeroLoja: z
+    .string({ error: "O número da loja é obrigatório" })
+    .min(1, { message: "O número da loja é obrigatório" }),
+  chavePix: z
+    .string({ error: "A chave Pix é obrigatória" })
+    .min(5, { message: "A chave Pix deve ter no mínimo 5 caracteres" }),
+  horaAbre: z
+    .string({ error: "A hora de abertura é obrigatória" })
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, { message: "Formato de hora inválido (HH:MM)" }),
+  horaFecha: z
+    .string({ error: "A hora de fechamento é obrigatória" })
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, { message: "Formato de hora inválido (HH:MM)" }),
+  prazoEntrega: z
+    .string({ error: "O prazo de entrega é obrigatório" })
+    .min(1, { message: "O prazo de entrega é obrigatório" }),
+  valorFrete: z
+    .number({ error: "O valor do frete é obrigatório" })
+    .min(0, { message: "O valor do frete não pode ser negativo" }),
+  pedidoMinimo: z
+    .number({ error: "O valor do pedido mínimo é obrigatório" })
+    .min(0, { message: "O valor do pedido mínimo não pode ser negativo" }),
+});
+
+export const updateConfiguracoesSchema = z.object({
+  nomeLoja: z
+    .string({ error: "O nome da loja é obrigatório" })
+    .min(3, { message: "O nome da loja deve ter no mínimo 3 caracteres" })
+    .max(100, { message: "O nome da loja deve ter no máximo 100 caracteres" })
+    .optional(),
+  numeroLoja: z
+    .string({ error: "O número da loja é obrigatório" })
+    .min(1, { message: "O número da loja é obrigatório" })
+    .optional(),
+  chavePix: z
+    .string({ error: "A chave Pix é obrigatória" })
+    .min(5, { message: "A chave Pix deve ter no mínimo 5 caracteres" })
+    .optional(),
+  horaAbre: z
+    .string({ error: "A hora de abertura é obrigatória" })
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, { message: "Formato de hora inválido (HH:MM)" })
+    .optional(),
+  horaFecha: z
+    .string({ error: "A hora de fechamento é obrigatória" })
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, { message: "Formato de hora inválido (HH:MM)" })
+    .optional(),
+  prazoEntrega: z
+    .string({ error: "O prazo de entrega é obrigatório" })
+    .min(1, { message: "O prazo de entrega é obrigatório" })
+    .optional(),
+  valorFrete: z
+    .number({ error: "O valor do frete é obrigatório" })
+    .min(0, { message: "O valor do frete não pode ser negativo" })
+    .optional(),
+  pedidoMinimo: z
+    .number({ error: "O valor do pedido mínimo é obrigatório" })
+    .min(0, { message: "O valor do pedido mínimo não pode ser negativo" })
+    .optional(),
 });

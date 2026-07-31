@@ -4,7 +4,9 @@ import sequelize from "@/database";
 interface EntregadorAttributes {
   id: number;
   nome: string;
+  placa: string
   telefone: string;
+  veiculos: string
   documento: string;
   disponivel: boolean;
   ativo: boolean;
@@ -28,6 +30,8 @@ export class Entregador
   declare disponivel: boolean;
   declare ativo: boolean;
   declare userId: number;
+  declare veiculos: string;
+  declare placa: string;
 
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
@@ -68,6 +72,14 @@ Entregador.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    veiculos: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    placa: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
 
     userId: {
