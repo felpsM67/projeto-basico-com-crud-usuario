@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { StatusPedido } from "@/enums/status-pedido";
 
 export const createUserSchema = z.object({
   nome: z
@@ -74,37 +75,82 @@ export const loginResponseSchema = z.object({
 export const refreshTokenSchema = z.object({
   refreshToken: z.string({ error: "O refresh token é obrigatório" }),
 });
-
-export const pedidoItemSchema = z.object({
-  produtoId: z.number({ error: "O ID do produto é obrigatório." }),
-  quantidade: z
-    .number({ error: "A quantidade deve ser um número" })
-    .min(1, { error: "A quantidade deve ser no mínimo 1" }),
-  precoUnitario: z
-    .number({ error: "O preço unitário deve ser um número" })
-    .min(0, { error: "O preço unitário deve ser no mínimo 0" }),
+export const statusPedidoSchema = z.enum(StatusPedido, {
+  error: `O status deve ser: ${Object.values(StatusPedido).join(", ")}`,
 });
 
-export const updatePedidoSchema = z.object({
-  status: z
-    .enum(["Pendente", "Em Progresso", "Concluído", "Cancelado"], {
-      error:
-        "O status deve ser 'Pendente', 'Em Progresso', 'Concluído' ou 'Cancelado'",
+export const pedidoItemSchema = z.object({
+  pratoId: z
+    .number({
+      error: "O ID do prato é obrigatório.",
     })
-    .optional(),
-  itens: z.array(pedidoItemSchema).optional(),
+    .int({
+      error: "O ID do prato deve ser um número inteiro.",
+    })
+    .positive({
+      error: "O ID do prato deve ser maior que zero.",
+    }),
+
+  quantidade: z
+    .number({
+      error: "A quantidade deve ser um número.",
+    })
+    .int({
+      error: "A quantidade deve ser um número inteiro.",
+    })
+    .min(1, {
+      error: "A quantidade deve ser no mínimo 1.",
+    }),
+
+  precoUnitario: z
+    .number({
+      error: "O preço unitário deve ser um número.",
+    })
+    .min(0, {
+      error: "O preço unitário não pode ser negativo.",
+    }),
 });
 
 export const createPedidoSchema = z.object({
-  usuarioId: z.number({ error: "O ID do usuário é obrigatório." }),
-  clienteTelefone: z.string({ error: "O telefone do cliente é obrigatório." }),
+  clienteTelefone: z
+    .string({
+      error: "O telefone do cliente é obrigatório.",
+    })
+    .min(10, {
+      error: "O telefone deve ter no mínimo 10 caracteres.",
+    })
+    .max(15, {
+      error: "O telefone deve ter no máximo 15 caracteres.",
+    }),
+
   itens: z
     .array(pedidoItemSchema, {
-      error: "Os itens do pedido estão incorretos",
+      error: "Os itens do pedido estão incorretos.",
     })
-    .min(1, { error: "O pedido deve ter no mínimo 1 item" }),
+    .min(1, {
+      error: "O pedido deve possuir pelo menos um item.",
+    }),
 });
 
+export const updatePedidoSchema = z
+  .object({
+    status: statusPedidoSchema.optional(),
+
+    itens: z
+      .array(pedidoItemSchema, {
+        error: "Os itens do pedido estão incorretos.",
+      })
+      .min(1, {
+        error: "O pedido deve possuir pelo menos um item.",
+      })
+      .optional(),
+  })
+  .refine(
+    (dados) => dados.status !== undefined || dados.itens !== undefined,
+    {
+      message: "Informe o status ou os itens que serão atualizados.",
+    }
+  );
 export const authResponseSchema = z.object({
   token: z.string(),
   userId: z.number(),

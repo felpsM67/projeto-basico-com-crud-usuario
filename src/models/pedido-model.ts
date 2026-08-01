@@ -1,17 +1,18 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../database";
-import { User } from "./user-model";
+
+import sequelize from "@/database";
+import { StatusPedido } from "@/enums/status-pedido";
+import Cliente from "@/models/cliente-model";
 
 export class Pedido extends Model {
-  id!: number;
-  codigo!: string;
-  userId!: number;
-  cliente_nome!: string;
-  cliente_endereco!: string;
-  cliente_telefone!: string;
-  prato_id!: number;
-  quantidade!: number;
-  status!: "CRIADO" | "PAGO" | "ATUALIZADO" | "CANCELADO";
+  declare id: number;
+  declare codigo: string;
+  declare clienteId: number;
+  declare total: number;
+  declare status: StatusPedido;
+
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Pedido.init(
@@ -21,53 +22,55 @@ Pedido.init(
       autoIncrement: true,
       primaryKey: true,
     },
+
     codigo: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
-      unique: false
+      unique: true,
     },
-    userId: {
+
+    clienteId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Users", // Nome do modelo alvo
-        key: "id", // Chave no modelo alvo que estamos referenciando
+        model: "Clientes",
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
+    },
+
+    total: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        min: 0,
       },
     },
-    cliente_nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    cliente_endereco: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    cliente_telefone: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    prato_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Pratos", // Name of the target model
-        key: "id", // Key in the target model that we're referencing
-      },
-    },
-    quantidade: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+
     status: {
-      type: DataTypes.ENUM("CRIADO", "PAGO", "ATUALIZADO", "CANCELADO"),
-      defaultValue: "CRIADO",
+      type: DataTypes.ENUM(...Object.values(StatusPedido)),
       allowNull: false,
+      defaultValue: StatusPedido.CRIADO,
     },
   },
   {
     sequelize,
     modelName: "Pedido",
+    tableName: "Pedidos",
+    timestamps: true,
   }
 );
-Pedido.belongsTo(User, { foreignKey: "userId", as: "user" });
+
+Pedido.belongsTo(Cliente, {
+  foreignKey: "clienteId",
+  as: "cliente",
+});
+
+Cliente.hasMany(Pedido, {
+  foreignKey: "clienteId",
+  as: "pedidos",
+});
+
 export default Pedido;
